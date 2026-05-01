@@ -1,0 +1,897 @@
+[
+    {
+        "id": "e37831a30ccb8ff4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "85538a31b973b6aa",
+        "type": "mqtt in",
+        "z": "e37831a30ccb8ff4",
+        "name": "",
+        "topic": "postureguard/sensor/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "091aa1600c954639",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "0a03a3bc2af26e07",
+                "17c1c9b6850f6279"
+            ]
+        ]
+    },
+    {
+        "id": "08eac7c86cb2f7cc",
+        "type": "mqtt out",
+        "z": "e37831a30ccb8ff4",
+        "name": "",
+        "topic": "postureguard/sensor/ack",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "091aa1600c954639",
+        "x": 930,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0a03a3bc2af26e07",
+        "type": "json",
+        "z": "e37831a30ccb8ff4",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 470,
+        "y": 160,
+        "wires": [
+            [
+                "428f3385c3d7aa46",
+                "a1f46c0992174277",
+                "bcdfb290248f19de",
+                "147341ab4c91606e"
+            ]
+        ]
+    },
+    {
+        "id": "17c1c9b6850f6279",
+        "type": "debug",
+        "z": "e37831a30ccb8ff4",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 180,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "428f3385c3d7aa46",
+        "type": "debug",
+        "z": "e37831a30ccb8ff4",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "75bef1ebe8982266",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "timestamp",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 710,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a1f46c0992174277",
+        "type": "function",
+        "z": "e37831a30ccb8ff4",
+        "name": "function 1",
+        "func": "let d = msg.payload;\n\nif (typeof d === \"string\") {\n    d = JSON.parse(d);\n}\n\nreturn [\n    { payload: d.ts },\n    { payload: d.ax },\n    { payload: d.ay },\n    { payload: d.az },\n    { payload: d.gx },\n    { payload: d.gy },\n    { payload: d.gz },\n\n    { payload: d.pressure_mv[0] },\n    { payload: d.pressure_mv[1] },\n    { payload: d.pressure_mv[2] },\n    { payload: d.pressure_mv[3] },\n    { payload: d.pressure_mv[4] },\n    { payload: d.pressure_mv[5] },\n    { payload: d.pressure_mv[6] },\n    { payload: d.pressure_mv[7] },\n    { payload: d.pressure_mv[8] },\n    { payload: d.pressure_mv[9] },\n\n    { payload: d.flex_mv },\n    { payload: d.posture }\n];",
+        "outputs": 19,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 700,
+        "wires": [
+            [
+                "75bef1ebe8982266"
+            ],
+            [
+                "be89d81f0e6cfdf3"
+            ],
+            [
+                "ce18fb55ba4de3b1"
+            ],
+            [
+                "f754533974edb3ac"
+            ],
+            [
+                "9c65a83b8f5be426"
+            ],
+            [
+                "01181baffc2dbe3f"
+            ],
+            [
+                "4d463d61ae917ba8"
+            ],
+            [
+                "5fe3fccf87993a32"
+            ],
+            [
+                "a559e7447908b180"
+            ],
+            [
+                "9d3ffc5cf45c65a0"
+            ],
+            [
+                "ec3c56484ca4fc72"
+            ],
+            [
+                "1dad16a6b9ae3eca"
+            ],
+            [
+                "7b126574ac0e5331"
+            ],
+            [
+                "6c09899bdc1ee66f"
+            ],
+            [
+                "a1b72c2938719737"
+            ],
+            [
+                "87c19fb049e7ec47"
+            ],
+            [
+                "72bb73048c2578e2"
+            ],
+            [
+                "b5bcb6f568a06371"
+            ],
+            [
+                "cb4f429461189639"
+            ]
+        ]
+    },
+    {
+        "id": "be89d81f0e6cfdf3",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "acc_x",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ce18fb55ba4de3b1",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "acc_y",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "f754533974edb3ac",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "acc_z",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "9c65a83b8f5be426",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "g_x",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "01181baffc2dbe3f",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "g_y",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "4d463d61ae917ba8",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "g_z",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5fe3fccf87993a32",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc1",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "a559e7447908b180",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc2",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "9d3ffc5cf45c65a0",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc3",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "ec3c56484ca4fc72",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc4",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "1dad16a6b9ae3eca",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc5",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "7b126574ac0e5331",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc6",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "6c09899bdc1ee66f",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc7",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "a1b72c2938719737",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc8",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "87c19fb049e7ec47",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc9",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "72bb73048c2578e2",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "adc10",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "b5bcb6f568a06371",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "flex",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 690,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "cb4f429461189639",
+        "type": "ui_text",
+        "z": "e37831a30ccb8ff4",
+        "group": "8649583e50567084",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Posture Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 720,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "bcdfb290248f19de",
+        "type": "function",
+        "z": "e37831a30ccb8ff4",
+        "name": "function 2",
+        "func": "msg.payload = \"Message Received\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 280,
+        "wires": [
+            [
+                "08eac7c86cb2f7cc"
+            ]
+        ]
+    },
+    {
+        "id": "147341ab4c91606e",
+        "type": "function",
+        "z": "e37831a30ccb8ff4",
+        "name": "function 3",
+        "func": "let d = msg.payload;\n\n// In case payload is string\nif (typeof d === \"string\") {\n    d = JSON.parse(d);\n}\n\n// Safe pressure array\nlet p = d.pressure_mv || [];\n\nmsg.payload = {\n    timestamp: new Date().toISOString(),\n    ts: d.ts,\n\n    ax: d.ax,\n    ay: d.ay,\n    az: d.az,\n\n    gx: d.gx,\n    gy: d.gy,\n    gz: d.gz,\n\n    pressure1_mv: p[0] ?? \"\",\n    pressure2_mv: p[1] ?? \"\",\n    pressure3_mv: p[2] ?? \"\",\n    pressure4_mv: p[3] ?? \"\",\n    pressure5_mv: p[4] ?? \"\",\n    pressure6_mv: p[5] ?? \"\",\n    pressure7_mv: p[6] ?? \"\",\n    pressure8_mv: p[7] ?? \"\",\n    pressure9_mv: p[8] ?? \"\",\n    pressure10_mv: p[9] ?? \"\",\n\n    flex_mv: d.flex_mv ?? \"\",\n    posture: d.posture ?? \"\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 80,
+        "wires": [
+            [
+                "f32054012da6436b"
+            ]
+        ]
+    },
+    {
+        "id": "f32054012da6436b",
+        "type": "csv",
+        "z": "e37831a30ccb8ff4",
+        "name": "",
+        "spec": "rfc",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "timestamp,ts,ax,ay,az,gx,gy,gz,pressure1_mv,pressure2_mv,pressure3_mv,pressure4_mv,pressure5_mv,pressure6_mv,pressure7_mv,pressure8_mv,pressure9_mv,pressure10_mv,flex_mv,posture",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 750,
+        "y": 80,
+        "wires": [
+            [
+                "fe6983787ca72d4c",
+                "925cf2e9da7c017b"
+            ]
+        ]
+    },
+    {
+        "id": "fe6983787ca72d4c",
+        "type": "file",
+        "z": "e37831a30ccb8ff4",
+        "name": "",
+        "filename": "/tmp/data.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 920,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "925cf2e9da7c017b",
+        "type": "debug",
+        "z": "e37831a30ccb8ff4",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload active",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "aeba97bdab9f3ede",
+        "type": "ui_button",
+        "z": "e37831a30ccb8ff4",
+        "name": "",
+        "group": "8649583e50567084",
+        "order": 21,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Firmware Update",
+        "tooltip": "Send firmware update command to board",
+        "color": "",
+        "bgcolor": "#ff9800",
+        "className": "",
+        "icon": "system_update_alt",
+        "payload": "Firmware Update",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 430,
+        "y": 20,
+        "wires": [
+            [
+                "a646e3b2ab30b116"
+            ]
+        ]
+    },
+    {
+        "id": "a646e3b2ab30b116",
+        "type": "function",
+        "z": "e37831a30ccb8ff4",
+        "name": "Send Firmware Command",
+        "func": "msg.payload = \"Firmware Update\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 20,
+        "wires": [
+            [
+                "ae1820f02a6687a2"
+            ]
+        ]
+    },
+    {
+        "id": "ae1820f02a6687a2",
+        "type": "mqtt out",
+        "z": "e37831a30ccb8ff4",
+        "name": "Firmware Command",
+        "topic": "postureguard/sensor/ack",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "091aa1600c954639",
+        "x": 970,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "d3df2235ca032ca4",
+        "type": "ui_base",
+        "z": "e37831a30ccb8ff4",
+        "theme": {
+            "angularTheme": {
+                "accents": "blue",
+                "background": "grey",
+                "palette": "light",
+                "primary": "indigo",
+                "warn": "red"
+            },
+            "customTheme": {
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "default": "#4B7930",
+                "name": "Untitled Theme 1"
+            },
+            "darkTheme": {
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "default": "#097479",
+                "edited": false
+            },
+            "lightTheme": {
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "default": "#0094CE",
+                "edited": true,
+                "reset": false
+            },
+            "name": "theme-light",
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "edited": false,
+                    "value": "#0094CE"
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                },
+                "group-backgroundColor": {
+                    "edited": false,
+                    "value": "#ffffff"
+                },
+                "group-borderColor": {
+                    "edited": false,
+                    "value": "#ffffff"
+                },
+                "group-textColor": {
+                    "edited": false,
+                    "value": "#1bbfff"
+                },
+                "page-backgroundColor": {
+                    "edited": false,
+                    "value": "#fafafa"
+                },
+                "page-sidebar-backgroundColor": {
+                    "edited": false,
+                    "value": "#ffffff"
+                },
+                "page-titlebar-backgroundColor": {
+                    "edited": false,
+                    "value": "#0094CE"
+                },
+                "widget-backgroundColor": {
+                    "edited": false,
+                    "value": "#0094ce"
+                },
+                "widget-borderColor": {
+                    "edited": false,
+                    "value": "#ffffff"
+                },
+                "widget-textColor": {
+                    "edited": false,
+                    "value": "#111111"
+                }
+            }
+        },
+        "site": {
+            "allowSwipe": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "hideToolbar": "false",
+            "lockMenu": "false",
+            "name": "Node-RED Dashboard",
+            "sizes": {
+                "cx": 6,
+                "cy": 6,
+                "gx": 6,
+                "gy": 6,
+                "px": 0,
+                "py": 0,
+                "sx": 48,
+                "sy": 48
+            }
+        }
+    },
+    {
+        "id": "091aa1600c954639",
+        "type": "mqtt-broker",
+        "name": "AzureMqttBroker",
+        "broker": "20.122.129.254",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8649583e50567084",
+        "type": "ui_group",
+        "name": "page2",
+        "tab": "4c65a2c76a2d4477",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4c65a2c76a2d4477",
+        "type": "ui_tab",
+        "name": "PostureGuard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "f43dbab43292d3a4",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

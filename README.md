@@ -6,10 +6,10 @@
 
 **Team Name:** PostureGuard
 
-| Team Member Name | Email Address | GitHub Username |
-| ---------------- | ------------- | --------------- |
-| Aditya Agarwal         | aditya10@seas.upenn.edu     | aditya10-source    |
-| Vihaan Ravishankar         | vihaan1@seas.upenn.edu     | vihaanpenn    |
+| Team Member Name   | Email Address           | GitHub Username |
+| ------------------ | ----------------------- | --------------- |
+| Aditya Agarwal     | aditya10@seas.upenn.edu | aditya10-source |
+| Vihaan Ravishankar | vihaan1@seas.upenn.edu  | vihaanpenn      |
 
 [GitHub Repository URL](https://github.com/ese5160/a11g-final-submission-s26-s26-t05-postureguard.git)
 
@@ -136,38 +136,37 @@ Streaming raw sensor data to Node-RED allowed us to prototype alert thresholds a
 
 **Lesson:** Even for embedded devices, consider where the business logic lives. Moving alert thresholds to the cloud made the device more flexible and the user experience more responsive to iteration.
 
-
-
 ---
 
 ### Next Steps & Takeaways
- 
+
 #### Path to Production
- 
+
 The prototype is functionally complete but not market-ready. To finish this device:
- 
+
 - **Power optimization:** Current firmware draws ~50mA in active mode. We need to implement sleep states and interrupt-driven sensor polling to extend battery life from 8 hours to 24+ hours.
 - **Firmware robustness:** Add watchdog timers, graceful error handling for sensor faults, and over-the-air (OTA) update capability via Azure so deployed devices can receive alert threshold updates without manual intervention.
 - **Haptic tuning:** User testing revealed the motor vibration pattern isn't distinctive enough—we'd implement variable intensity and rhythm patterns so users learn to recognize different alert types (slouch vs. recline vs. asymmetric pressure).
 - **Manufacturing readiness:** Fix the PCB layout (component placement, eliminate the center gap, add test points), create a proper bill of materials (BOM) with lead-time forecasting, and establish supplier relationships for the SiWx917 MCU and custom pressure sensor arrays.
+
 #### Course Learnings from ESE5160
- 
+
 This capstone project synthesized three critical lessons:
- 
+
 **1. Sensor-to-Cloud Integration is Nonlinear**
- 
+
 The lectures emphasized that embedded systems operate under strict power and latency budgets. Building this device, we learned that those constraints force design trade-offs that ripple up the stack. We couldn't stream raw IMU data at 100Hz to the cloud—the WiFi power draw would kill the battery in minutes. Instead, we implemented sensor fusion on the MCU (fusing pressure + flex + IMU into a single "posture state") and sent only the high-level results to Node-RED. This taught us that **the boundary between edge and cloud is a design choice, not a fixed line**. Smart embedded systems do the right computation at the right place.
- 
+
 **2. Hardware Integration Requires Systems Thinking**
- 
+
 ESE5160 labs taught us to debug individual components (pull-up resistors, I²C timing, UART baud rates). But real integration—connecting 12 different sensors on the same I²C bus, managing power delivery to a vibration motor, coordinating wireless transmission—exposed the gaps. The missing connector and DNP jumpers didn't show up in simulation; they only surfaced when we held the actual board in our hands. This reinforced that **prototype-driven development catches real-world issues**. Reading a datasheet teaches you the spec; soldering teaches you the reality.
- 
+
 **3. Modularity is How You Ship Under Pressure**
- 
+
 When illness compressed our timeline, we survived because we'd decoupled concerns: sensor acquisition (MCU firmware) was separate from processing logic (Node-RED) was separate from visualization (HTML dashboard). Cutting SD card logging or BLE didn't break the core path. The course emphasized designing for testing; we learned it also means designing for **scope negotiation under constraint**. The best engineering isn't the most feature-rich—it's the most resilient to unexpected setbacks.
- 
+
 **4. Real-Time Feedback Loops Drive Learning**
- 
+
 The lectures covered control theory and sensor accuracy. Building a haptic device taught us something simpler but more powerful: **immediate feedback accelerates iteration**. Because the user feels the motor vibration instantly, we could test postural thresholds in real-time and tune them within minutes. This is why the cloud pipeline mattered—not because it's trendy, but because it closed the feedback loop between the user and the algorithm. ESE5160's emphasis on measurement and validation made perfect sense once we had something that actually vibrated in response to human movement.
 
 ### Summary
@@ -184,44 +183,44 @@ This project taught us that hardware integration is iterative, scheduling happen
 
 #### Sensors
 
-| Component | Qty | Purpose | Notes |
-|-----------|-----|---------|-------|
-| Pressure sensor (FSR) | 10 | Seat contact distribution | Distributed across seat and backrest |
-| Flex sensor | 1 | Recline angle measurement | Tracks chair recline position |
-| 6-DOF IMU | 1 | Rotational & translational motion | Detects slouching and spinal tilt |
+| Component             | Qty | Purpose                           | Notes                                |
+| --------------------- | --- | --------------------------------- | ------------------------------------ |
+| Pressure sensor (FSR) | 10  | Seat contact distribution         | Distributed across seat and backrest |
+| Flex sensor           | 1   | Recline angle measurement         | Tracks chair recline position        |
+| 6-DOF IMU             | 1   | Rotational & translational motion | Detects slouching and spinal tilt    |
 
 #### Microcontroller & Wireless
 
-| Component | Specification |
-|-----------|---------------|
-| MCU | SiWx917 (SiWx917Y121MGABA) |
-| Wireless | WiFi 802.11 b/g/n |
-| Interface | I²C + UART for sensors |
-| Board | Custom PCB (hand-soldered assembly) |
+| Component | Specification                       |
+| --------- | ----------------------------------- |
+| MCU       | SiWx917 (SiWx917Y121MGABA)          |
+| Wireless  | WiFi 802.11 b/g/n                   |
+| Interface | I²C + UART for sensors             |
+| Board     | Custom PCB (hand-soldered assembly) |
 
 #### Actuators & Output
 
-| Component | Purpose |
-|-----------|---------|
+| Component              | Purpose                            |
+| ---------------------- | ---------------------------------- |
 | Haptic vibration motor | Real-time posture feedback to user |
 
 #### Power Management
 
-| Component | Specification |
-|-----------|---------------|
-| Battery | Li-Ion rechargeable |
-| Charger IC | BQ24075 |
-| Converter | TPS62082 buck converter |
-| Connector | Battery charger connector (JST or equivalent) |
-| Expected Life | 8 hours (current); target 24+ hours |
+| Component     | Specification                                 |
+| ------------- | --------------------------------------------- |
+| Battery       | Li-Ion rechargeable                           |
+| Charger IC    | BQ24075                                       |
+| Converter     | TPS62082 buck converter                       |
+| Connector     | Battery charger connector (JST or equivalent) |
+| Expected Life | 8 hours (current); target 24+ hours           |
 
 #### Mechanical & Assembly
 
-| Requirement | Details |
-|-------------|---------|
-| PCB Layout | Optimized for hand-soldering; grouped components by function; eliminate dead zones |
-| Connectors | Female JST connectors for sensor inputs |
-| Test Points | Accessible test points for critical power rails and signals |
+| Requirement | Details                                                                            |
+| ----------- | ---------------------------------------------------------------------------------- |
+| PCB Layout  | Optimized for hand-soldering; grouped components by function; eliminate dead zones |
+| Connectors  | Female JST connectors for sensor inputs                                            |
+| Test Points | Accessible test points for critical power rails and signals                        |
 
 ---
 
@@ -230,6 +229,7 @@ This project taught us that hardware integration is iterative, scheduling happen
 #### Firmware (Embedded, MCU-side)
 
 ##### Sensor Interface & Acquisition
+
 - I²C driver for pressure sensor array (10× parallel sensors)
 - I²C driver for 6-DOF IMU
 - Analog-to-digital conversion for flex sensor
@@ -237,6 +237,7 @@ This project taught us that hardware integration is iterative, scheduling happen
 - Graceful fault handling for sensor read failures
 
 ##### Sensor Fusion & Processing
+
 - Pressure distribution algorithm (detect asymmetry)
 - Flex sensor data to recline angle mapping
 - IMU data fusion (acceleration + gyroscope) for posture state estimation
@@ -245,6 +246,7 @@ This project taught us that hardware integration is iterative, scheduling happen
 - Asymmetric pressure detection from FSR array
 
 ##### Posture Detection Logic
+
 - Threshold-based classification:
   - Slouch state (IMU tilt > threshold)
   - Recline state (flex angle > threshold)
@@ -253,23 +255,27 @@ This project taught us that hardware integration is iterative, scheduling happen
 - Debouncing to prevent false alerts
 
 ##### Haptic Control
+
 - PWM-based motor control for variable intensity
 - Alert pattern logic (rhythm/intensity variations for different posture violations)
 - Real-time response (< 100ms latency from detection to vibration)
 
 ##### Wireless & Communication
+
 - WiFi connection establishment & re-connection logic
 - Sensor data serialization (JSON or binary format)
 - Transmission to Azure VM (every 5 seconds or on-demand)
 - Connection state monitoring
 
 ##### Power Management
+
 - Current implementation: ~50mA active draw
 - Future: sleep states & interrupt-driven sensor polling
 - Watchdog timer for system reliability
 - Power gating for unused peripherals
 
 ##### Future Requirements
+
 - Over-the-air (OTA) firmware updates via Azure
 - Error logging & diagnostics
 - Memory-efficient circular buffers for local sensor logging
@@ -279,23 +285,27 @@ This project taught us that hardware integration is iterative, scheduling happen
 #### Cloud Processing (Azure VM + Node-RED)
 
 ##### Data Aggregation
+
 - Real-time ingestion of sensor batches from MCU
 - Data validation & format normalization
 - Timestamp synchronization (Unix milliseconds)
 
 ##### Alert Logic & Thresholds
+
 - Dynamic threshold management (received from dashboard or admin panel)
 - Posture classification based on sensor fusion output
 - Alert generation & logging
 - Latency monitoring (time from MCU transmission to cloud processing)
 
 ##### Data Storage & History
+
 - Persistent storage of all sensor readings (time-series database)
 - Alert event history (timestamp, type, duration)
 - Per-user session management
 - Trend analysis (sitting posture patterns over days/weeks)
 
 ##### API & Communication
+
 - REST/WebSocket endpoints for dashboard
 - Real-time data streaming to frontend
 - Graceful handling of MCU disconnection
@@ -306,11 +316,13 @@ This project taught us that hardware integration is iterative, scheduling happen
 #### Frontend (Web Dashboard)
 
 ##### User Interface
+
 - HTML5 + JavaScript (vanilla or lightweight framework)
 - Responsive design (desktop & mobile)
 - Real-time updates via WebSocket
 
 ##### Visualizations & Metrics
+
 - Live posture state indicator (current slouch/recline/symmetric status)
 - Pressure distribution heatmap (10-sensor grid visualization)
 - Flex angle gauge (recline angle in degrees)
@@ -318,12 +330,14 @@ This project taught us that hardware integration is iterative, scheduling happen
 - Trend graphs (posture quality over days)
 
 ##### User Interactions
+
 - Threshold configuration sliders (slouch angle, recline threshold, pressure asymmetry limit)
 - Session start/stop controls
 - Data export (CSV or JSON)
 - Real-time toggle for alerts on/off
 
 ##### Data Display
+
 - Live metrics (current state, sensor values)
 - Historical analytics (daily sitting duration, posture quality %)
 - Caregiver view (multiple user monitoring)
@@ -333,6 +347,7 @@ This project taught us that hardware integration is iterative, scheduling happen
 ### System Integration Requirements
 
 #### Communication Protocol
+
 - Primary: WiFi (802.11 b/g/n) from MCU to cloud
 - Cloud-to-dashboard: WebSocket for real-time updates
 - Optional: MQTT topic structure for scalability
@@ -341,12 +356,14 @@ This project taught us that hardware integration is iterative, scheduling happen
   - `postureguard/{deviceId}/ack` (Cloud acknowledgment)
 
 #### Latency & Timing
+
 - Sensor sampling: 100 Hz (10 ms per cycle)
 - Haptic feedback latency: < 100 ms (user must feel immediate response)
 - Cloud transmission: every 5 seconds or on alert trigger
 - Dashboard update: < 1 second (WebSocket push)
 
 #### Data Format (Sensor Batch)
+
 - Device ID & timestamp (Unix milliseconds)
 - Packet sequence number & protocol version
 - Pressure readings (10× 8-bit or 10-bit values)
@@ -355,12 +372,14 @@ This project taught us that hardware integration is iterative, scheduling happen
 - Optional: local posture classification result
 
 #### Error Handling & Resilience
+
 - MCU detects sensor faults → logs error + continues with available sensors
 - WiFi disconnection → attempt re-connection with exponential backoff
 - Cloud unavailability → local buffering on MCU (TBD: duration)
 - Corrupted packets → discard + log + continue
 
 #### Security (Out of scope for prototype; future consideration)
+
 - WiFi WPA2 minimum
 - HTTPS for cloud endpoints
 - Device authentication (API key or certificate)
@@ -370,15 +389,15 @@ This project taught us that hardware integration is iterative, scheduling happen
 
 ### Performance & Constraints
 
-| Metric | Current | Target |
-|--------|---------|--------|
-| Battery life | 8 hours | 24+ hours |
-| MCU active power draw | ~50 mA | < 30 mA (with sleep states) |
-| Sensor sampling rate | 100 Hz | 100 Hz minimum |
-| Haptic response latency | < 100 ms | < 100 ms |
-| Cloud round-trip latency | TBD | < 500 ms typical |
-| Memory footprint (firmware) | TBD | < 512 KB (if available) |
-| Dashboard update rate | 1–2 updates/sec | 1 update/sec minimum |
+| Metric                      | Current          | Target                      |
+| --------------------------- | ---------------- | --------------------------- |
+| Battery life                | 8 hours          | 24+ hours                   |
+| MCU active power draw       | ~50 mA           | < 30 mA (with sleep states) |
+| Sensor sampling rate        | 100 Hz           | 100 Hz minimum              |
+| Haptic response latency     | < 100 ms         | < 100 ms                    |
+| Cloud round-trip latency    | TBD              | < 500 ms typical            |
+| Memory footprint (firmware) | TBD              | < 512 KB (if available)     |
+| Dashboard update rate       | 1–2 updates/sec | 1 update/sec minimum        |
 
 ---
 
@@ -403,10 +422,24 @@ This project taught us that hardware integration is iterative, scheduling happen
 
 ## 4. Project Photos & Screenshots
 
+![pcb_top](pcb_top.jpg)
+![pcb_bottom](pcb_bottom.jpg)
+![chair_setup](chair_setup.jpeg)
+![chair_front](chair_front.jpeg)
+![chair_back](chair_back.jpeg)
+![base_sensor](base_sensor.jpeg)
+![thermal](thermal.png)
+![hardware_base](hardware_base.jpeg)
+![node-red](node-red.png)
+![html_page](html_page.png)
+
 ## 5. Codebase
 
 Do *not* commit any of your source code to this repository. Rather, provide links to the other GitHub repository you've already been using with your firmware.
 
 - A link to your final embedded C firmware codebases
+  [Final_Codebase](https://github.com/ese5160/final-project-firmware-s26-t05-postureguard.git)
 - A link to your Node-RED dashboard code
+  [node-red](20.122.129.254:1880) json file committed here also incase vm is down
 - Links to any other software required for the functionality of your device
+  [index.html](20.122.129.254)
