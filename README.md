@@ -2,16 +2,16 @@
 
 # a11g-final-submission
 
-**Team Number:**
+**Team Number:** T05
 
-**Team Name:**
+**Team Name:** PostureGuard
 
 | Team Member Name | Email Address | GitHub Username |
 | ---------------- | ------------- | --------------- |
-| [Name 1]         | [Email 1]     | [Username 1]    |
-| [Name 2]         | [Email 2]     | [Username 2]    |
+| Aditya Agarwal         | aditya10@seas.upenn.edu     | aditya10-source    |
+| Vihaan Ravishankar         | vihaan1@seas.upenn.edu     | vihaanpenn    |
 
-**GitHub Repository URL:**
+[GitHub Repository URL](https://github.com/ese5160/a11g-final-submission-s26-s26-t05-postureguard.git)
 
 ## 1. Video Presentation
 
