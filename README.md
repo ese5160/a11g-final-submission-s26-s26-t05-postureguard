@@ -15,6 +15,8 @@
 
 ## 1. Video Presentation
 
+[VideoLink](https://www.youtube.com/shorts/2V9iATWrcdQ)
+
 ## 2. Project Summary
 
 ### Posture Detection and Monitoring Device
